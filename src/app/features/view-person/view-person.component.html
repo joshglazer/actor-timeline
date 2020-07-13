@@ -3,8 +3,13 @@
 </ng-container>
 
 <ng-container *ngIf="movies">
-  <div *ngFor="let movie of movies.cast">
-    {{ movie.original_title }} - {{ movie.vote_average }} -
-    {{ movie.vote_count }}
-  </div>
+  <ng-container *ngIf="moviesChartData">
+    <ejs-chart id="chart-container" [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [title]="title">
+      <e-series-collection>
+        <e-series [dataSource]="moviesChartData" type="Line" xName="x" yName="y" name="Sales"></e-series>
+      </e-series-collection>
+    </ejs-chart>
+  </ng-container>
+
+  <div *ngFor="let movie of movies.cast">{{ movie.original_title }} - {{ movie.vote_average }}</div>
 </ng-container>
