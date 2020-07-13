@@ -1,0 +1,24 @@
+<h1>Welcome to the Actor Timeline</h1>
+<div>How good or bad is your favorite actor's career? Type their name into the search box below to find out.</div>
+
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+  <mat-form-field>
+    <mat-label>Name:</mat-label>
+    <input matInput type="text" formControlName="name" required />
+    <mat-error *ngIf="false">Name is required</mat-error>
+  </mat-form-field>
+</form>
+
+<ng-containr *ngIf="searchResults !== null && searchResults.results">
+  <ng-container *ngIf="searchResults.total_results !== 0; else noResults">
+    <div *ngFor="let actor of searchResults.results">
+      <div *ngIf="actor.name">
+        {{ actor.name }}
+        <img [src]="TMDB_IMAGE_BASE_PATH + actor.profile_path" />
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noResults>
+    No actors were found. Try searching for somebody else.
+  </ng-template>
+</ng-containr>
