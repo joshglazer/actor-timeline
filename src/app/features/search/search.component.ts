@@ -13,7 +13,7 @@ export class SearchComponent implements OnInit {
     name: new FormControl('', [Validators.required]),
   });
 
-  public searchResults: TmdbSearchPersonResults = null;
+  public searchResults: TmdbSearchPersonResults;
 
   public TMDB_IMAGE_BASE_PATH = TMDB_IMAGE_BASE_PATH;
 

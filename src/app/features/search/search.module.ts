@@ -7,6 +7,7 @@ import { SearchComponent } from './search.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [SearchComponent],
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
     // Material
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
   ],
 })
 export class SearchModule {}

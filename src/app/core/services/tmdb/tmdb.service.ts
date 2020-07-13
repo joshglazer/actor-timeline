@@ -27,6 +27,6 @@ export class TmdbService {
       include_adult: 'false',
     };
     console.log(params);
-    return this.http.get(searchUrl, { params });
+    return this.http.get<TmdbSearchPersonResults>(searchUrl, { params });
   }
 }

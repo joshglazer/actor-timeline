@@ -1,4 +1,4 @@
-export class TmdbSearchPersonResults {
+export interface TmdbSearchPersonResults {
   page: number;
   results: {
     adult: boolean;

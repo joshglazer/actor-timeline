@@ -7,9 +7,10 @@
     <input matInput type="text" formControlName="name" required />
     <mat-error *ngIf="false">Name is required</mat-error>
   </mat-form-field>
+  <button mat-button color="primary">Search</button>
 </form>
 
-<ng-containr *ngIf="searchResults !== null && searchResults.results">
+<ng-container *ngIf="searchResults !== undefined && searchResults.results">
   <ng-container *ngIf="searchResults.total_results !== 0; else noResults">
     <div *ngFor="let actor of searchResults.results">
       <div *ngIf="actor.name">
@@ -21,4 +22,4 @@
   <ng-template #noResults>
     No actors were found. Try searching for somebody else.
   </ng-template>
-</ng-containr>
+</ng-container>

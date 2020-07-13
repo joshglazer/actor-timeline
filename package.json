@@ -1,5 +1,5 @@
 {
-  "name": "actor-timeline",
+  "name": "hollywood-timeline",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "format:fix": "pretty-quick --staged",
     "precommit": "run-s format:fix lint",
-    "analyze": "ng build --prod --stats-json && webpack-bundle-analyzer ./dist/actor-timeline/stats.json"
+    "analyze": "ng build --prod --stats-json && webpack-bundle-analyzer ./dist/hollywood-timeline/stats.json"
   },
   "private": true,
   "dependencies": {
