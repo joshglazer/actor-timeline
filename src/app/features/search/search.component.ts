@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TmdbService } from './../../core/services/tmdb/tmdb.service';
+import { TmdbApiService } from './../../core/services/tmdb-api/tmdbApi.service';
 import { TmdbSearchPersonResults, TMDB_IMAGE_BASE_PATH } from '../../core/models/tmdb-results.models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -12,21 +13,23 @@ export class SearchComponent implements OnInit {
   public searchForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
   });
-
   public searchResults: TmdbSearchPersonResults;
-
   public TMDB_IMAGE_BASE_PATH = TMDB_IMAGE_BASE_PATH;
 
-  constructor(private tmdbService: TmdbService) {}
+  constructor(private router: Router, private tmdbApiService: TmdbApiService) {}
 
   ngOnInit(): void {}
 
   public onSearch(): void {
     const actorName = this.searchForm.get('name');
     if (actorName) {
-      this.tmdbService.searchForActor(actorName.value).subscribe((data) => {
+      this.tmdbApiService.searchForPerson(actorName.value).subscribe((data) => {
         this.searchResults = data;
       });
     }
+  }
+
+  public selectPerson(personID: number): void {
+    this.router.navigate(['viewPerson', personID]);
   }
 }

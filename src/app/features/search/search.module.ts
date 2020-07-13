@@ -8,6 +8,7 @@ import { SearchComponent } from './search.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [SearchComponent],
@@ -15,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     SearchRoutingModule,
     ReactiveFormsModule,
+    RouterModule,
 
     // Material
     MatFormFieldModule,

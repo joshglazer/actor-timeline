@@ -14,11 +14,11 @@
 
 <ng-container *ngIf="searchResults !== undefined && searchResults.results">
   <ng-container *ngIf="searchResults.total_results !== 0; else noResults">
-    <div *ngFor="let actor of searchResults.results">
-      <div *ngIf="actor.name">
-        {{ actor.name }}
-        <img [src]="TMDB_IMAGE_BASE_PATH + actor.profile_path" />
-      </div>
+    <div *ngFor="let person of searchResults.results">
+      <a *ngIf="person.name" (click)="selectPerson(person.id)" href="javascript: void(0)">
+        {{ person.name }}
+        <img [src]="TMDB_IMAGE_BASE_PATH + person.profile_path" />
+      </a>
     </div>
   </ng-container>
   <ng-template #noResults>

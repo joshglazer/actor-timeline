@@ -1,0 +1,10 @@
+<ng-container *ngIf="person">
+  <p>Let's see how {{ person.name }}'s career is going...</p>
+</ng-container>
+
+<ng-container *ngIf="movies">
+  <div *ngFor="let movie of movies.cast">
+    {{ movie.original_title }} - {{ movie.vote_average }} -
+    {{ movie.vote_count }}
+  </div>
+</ng-container>
