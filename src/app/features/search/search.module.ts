@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxBrokenImgModule } from 'ngx-broken-img';
 
 @NgModule({
   declarations: [SearchComponent],
@@ -30,6 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatGridListModule,
 
     FlexLayoutModule,
+    NgxBrokenImgModule,
   ],
 })
 export class SearchModule {}
