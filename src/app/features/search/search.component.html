@@ -19,7 +19,6 @@
         <a *ngIf="person.name" (click)="selectPerson(person.id)" href="javascript: void(0)" fxFlex="22%">
           <mat-card class="searchResultsPerson">
             <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
               <mat-card-title>{{ person.name }}</mat-card-title>
             </mat-card-header>
             <img mat-card-image [src]="TMDB_IMAGE_BASE_PATH + person.profile_path" [alt]="'Photo of ' + person.name" />
