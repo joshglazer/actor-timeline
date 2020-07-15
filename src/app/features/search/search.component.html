@@ -1,4 +1,4 @@
-<h1>Welcome to the Actor Timeline</h1>
+<h1>Welcome to the Hollywood Timeline</h1>
 <div>
   How good or bad is your favorite Hollywood celebrity's career? Type their name into the search box below to find out.
 </div>
@@ -14,11 +14,22 @@
 
 <ng-container *ngIf="searchResults !== undefined && searchResults.results">
   <ng-container *ngIf="searchResults.total_results !== 0; else noResults">
-    <div *ngFor="let person of searchResults.results">
-      <a *ngIf="person.name" (click)="selectPerson(person.id)" href="javascript: void(0)">
-        {{ person.name }}
-        <img [src]="TMDB_IMAGE_BASE_PATH + person.profile_path" />
-      </a>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between" fxLayoutGap="10px" fxLayoutAlign="center">
+      <ng-container *ngFor="let person of searchResults.results">
+        <a *ngIf="person.name" (click)="selectPerson(person.id)" href="javascript: void(0)" fxFlex="22%">
+          <mat-card class="searchResultsPerson">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{ person.name }}</mat-card-title>
+            </mat-card-header>
+            <img mat-card-image [src]="TMDB_IMAGE_BASE_PATH + person.profile_path" [alt]="'Photo of ' + person.name" />
+            <mat-card-actions>
+              <button mat-button>LIKE</button>
+              <button mat-button>SHARE</button>
+            </mat-card-actions>
+          </mat-card>
+        </a>
+      </ng-container>
     </div>
   </ng-container>
   <ng-template #noResults>

@@ -25,6 +25,9 @@ export class SearchComponent implements OnInit {
     if (actorName) {
       this.tmdbApiService.searchForPerson(actorName.value).subscribe((data) => {
         this.searchResults = data;
+        if (this.searchResults.total_results === 1) {
+          this.selectPerson(this.searchResults.results[0].id);
+        }
       });
     }
   }

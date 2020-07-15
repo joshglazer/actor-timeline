@@ -8,6 +8,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 @NgModule({
   declarations: [MainLayoutComponent],
   imports: [
@@ -19,6 +21,9 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 
     // Material
     MatToolbarModule,
+
+    // Flex
+    FlexLayoutModule,
   ],
   exports: [MainLayoutComponent],
 })
