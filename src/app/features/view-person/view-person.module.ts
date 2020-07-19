@@ -5,6 +5,10 @@ import { ViewPersonRoutingModule } from './view-person-routing.module';
 import { ViewPersonComponent } from './view-person.component';
 
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
+
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+
 import {
   DateTimeService,
   LineSeriesService,
@@ -14,7 +18,7 @@ import {
 
 @NgModule({
   declarations: [ViewPersonComponent],
-  imports: [CommonModule, ViewPersonRoutingModule, ChartModule],
+  imports: [CommonModule, ViewPersonRoutingModule, ChartModule, MatTableModule, MatSortModule],
   providers: [DateTimeService, LineSeriesService, DateTimeCategoryService, StripLineService],
 })
 export class ViewPersonModule {}

@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { TmdbApiService } from '../../core/services/tmdb-api/tmdbApi.service';
 import { TmdbMovieCredits, TmdbPerson } from '../../core/models/tmdb-results.models';
 
 import { AxisModel } from '@syncfusion/ej2-angular-charts';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface ChartData {
   x: Date;
   y: number;
 }
 
-interface ChartAxis {
+interface DataTableRow {
   title: string;
-  valueType?: string;
-  labelFormat?: string;
+  releaseDate: Date;
+  rating: number;
 }
 
 @Component({
@@ -33,6 +35,11 @@ export class ViewPersonComponent implements OnInit {
   public title: string;
   public primaryXAxis: AxisModel;
   public primaryYAxis: AxisModel;
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  displayedColumns: string[] = ['title', 'releaseDate', 'rating'];
+  tableDataSource: MatTableDataSource<DataTableRow>;
 
   constructor(private route: ActivatedRoute, private tmdbApiService: TmdbApiService) {}
 
@@ -64,20 +71,30 @@ export class ViewPersonComponent implements OnInit {
     this.tmdbApiService.searchForMoviesByPersonID(this.personID).subscribe((movies: TmdbMovieCredits) => {
       this.movies = movies;
       const moviesChartDataUnsorted = [];
+      let dataSource: DataTableRow[] = [];
       for (const movie of movies.cast) {
         if (movie.release_date !== '' && movie.release_date !== undefined && movie.vote_count > 0) {
           const releaseDate = movie.release_date.split('-');
-          const releaseDatePersed = new Date(
+          const releaseDateParsed = new Date(
             parseInt(releaseDate[0], 10),
             parseInt(releaseDate[1], 10),
             parseInt(releaseDate[2], 10)
           );
           moviesChartDataUnsorted.push({
-            x: releaseDatePersed,
+            x: releaseDateParsed,
             y: movie.vote_average,
+          });
+          dataSource.push({
+            title: movie.original_title,
+            releaseDate: releaseDateParsed,
+            rating: movie.vote_average,
           });
         }
       }
+      dataSource = dataSource.sort((a, b) => (a.releaseDate > b.releaseDate ? 1 : -1));
+      this.tableDataSource = new MatTableDataSource(dataSource);
+      this.tableDataSource.sort = this.sort;
+
       this.moviesChartDataRaw = moviesChartDataUnsorted.sort((a, b) => (a.x > b.x ? 1 : -1));
     });
   }
