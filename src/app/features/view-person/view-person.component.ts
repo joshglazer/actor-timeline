@@ -3,6 +3,19 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { TmdbApiService } from '../../core/services/tmdb-api/tmdbApi.service';
 import { TmdbMovieCredits, TmdbPerson } from '../../core/models/tmdb-results.models';
 
+import { AxisModel } from '@syncfusion/ej2-angular-charts';
+
+interface ChartData {
+  x: Date;
+  y: number;
+}
+
+interface ChartAxis {
+  title: string;
+  valueType?: string;
+  labelFormat?: string;
+}
+
 @Component({
   selector: 'app-view-person',
   templateUrl: './view-person.component.html',
@@ -13,15 +26,13 @@ export class ViewPersonComponent implements OnInit {
 
   public person: TmdbPerson;
   public movies: TmdbMovieCredits;
-  public moviesChartData: {
-    x: Date;
-    y: number;
-  }[];
 
-  public primaryXAxis: Object;
-  public chartData: Object[];
+  public moviesChartDataRaw: ChartData[];
+  public moviesChartDataYear: ChartData[];
+
   public title: string;
-  public primaryYAxis: Object;
+  public primaryXAxis: AxisModel;
+  public primaryYAxis: AxisModel;
 
   constructor(private route: ActivatedRoute, private tmdbApiService: TmdbApiService) {}
 
@@ -67,7 +78,7 @@ export class ViewPersonComponent implements OnInit {
           });
         }
       }
-      this.moviesChartData = moviesChartDataUnsorted.sort((a, b) => (a.x > b.x ? 1 : -1));
+      this.moviesChartDataRaw = moviesChartDataUnsorted.sort((a, b) => (a.x > b.x ? 1 : -1));
     });
   }
 }

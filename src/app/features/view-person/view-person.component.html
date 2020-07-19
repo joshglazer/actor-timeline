@@ -1,12 +1,13 @@
 <ng-container *ngIf="person">
+  <h2>{{ person.name }}</h2>
   <p>Let's see how {{ person.name }}'s career is going...</p>
 </ng-container>
 
 <ng-container *ngIf="movies">
-  <ng-container *ngIf="moviesChartData">
+  <ng-container *ngIf="moviesChartDataRaw">
     <ejs-chart id="chart-container" [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [title]="title">
       <e-series-collection>
-        <e-series [dataSource]="moviesChartData" type="Line" xName="x" yName="y" name="Sales"></e-series>
+        <e-series [dataSource]="moviesChartDataRaw" type="Line" xName="x" yName="y" name="Sales"></e-series>
       </e-series-collection>
     </ejs-chart>
   </ng-container>
