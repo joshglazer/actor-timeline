@@ -28,7 +28,6 @@
     "@angular/router": "~10.1.2",
     "@syncfusion/ej2-angular-charts": "^18.2.58",
     "@syncfusion/ej2-angular-grids": "^18.2.58",
-    "ngx-broken-img": "^1.0.2",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.1",
     "zone.js": "~0.10.3"
