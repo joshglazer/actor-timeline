@@ -8,6 +8,7 @@ import { ChartModule } from '@syncfusion/ej2-angular-charts';
 
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
 
 import {
   DateTimeService,
@@ -18,7 +19,7 @@ import {
 
 @NgModule({
   declarations: [ViewPersonComponent],
-  imports: [CommonModule, ViewPersonRoutingModule, ChartModule, MatTableModule, MatSortModule],
+  imports: [CommonModule, ViewPersonRoutingModule, ChartModule, MatIconModule, MatTableModule, MatSortModule],
   providers: [DateTimeService, LineSeriesService, DateTimeCategoryService, StripLineService],
 })
 export class ViewPersonModule {}

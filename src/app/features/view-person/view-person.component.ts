@@ -7,16 +7,7 @@ import { AxisModel } from '@syncfusion/ej2-angular-charts';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-interface ChartData {
-  x: Date;
-  y: number;
-}
-
-interface DataTableRow {
-  title: string;
-  releaseDate: Date;
-  rating: number;
-}
+import { ChartData, DataTableRow, ComparisonDirectionEnum, Comparison } from './view-person.models';
 
 @Component({
   selector: 'app-view-person',
@@ -38,8 +29,10 @@ export class ViewPersonComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns: string[] = ['title', 'releaseDate', 'rating'];
+  displayedColumns: string[] = ['title', 'releaseDate', 'rating', 'comparison'];
   tableDataSource: MatTableDataSource<DataTableRow>;
+
+  ComparisonDirectionEnum = ComparisonDirectionEnum;
 
   constructor(private route: ActivatedRoute, private tmdbApiService: TmdbApiService) {}
 
@@ -72,6 +65,9 @@ export class ViewPersonComponent implements OnInit {
       this.movies = movies;
       const moviesChartDataUnsorted = [];
       let dataSource: DataTableRow[] = [];
+
+      let lastRating = null;
+
       for (const movie of movies.cast) {
         if (movie.release_date !== '' && movie.release_date !== undefined && movie.vote_count > 0) {
           const releaseDate = movie.release_date.split('-');
@@ -84,11 +80,22 @@ export class ViewPersonComponent implements OnInit {
             x: releaseDateParsed,
             y: movie.vote_average,
           });
+          let comparison: Comparison | null = null;
+          if (lastRating) {
+            const amount = lastRating - movie.vote_average;
+            comparison = {
+              amount: amount,
+              direction: amount > 0 ? ComparisonDirectionEnum.UP : ComparisonDirectionEnum.DOWN,
+            };
+          }
+
           dataSource.push({
             title: movie.original_title,
             releaseDate: releaseDateParsed,
             rating: movie.vote_average,
+            comparison,
           });
+          lastRating = movie.vote_average;
         }
       }
       dataSource = dataSource.sort((a, b) => (a.releaseDate > b.releaseDate ? 1 : -1));
