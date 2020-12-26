@@ -1,0 +1,15 @@
+<mat-card class="searchResultsPerson">
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+    <mat-card-subtitle>{{ movie.title }}</mat-card-subtitle>
+  </mat-card-header>
+  <img
+    mat-card-image
+    [src]="movie.poster_path ? TMDB_IMAGE_BASE_PATH + movie.poster_path : './assets/no_picture_found.jpg'"
+    [alt]="'Photo of ' + movie.title"
+    ngxBrokenImg="./assets/no_picture_found.jpg"
+  />
+  <mat-card-content>
+    <p>Rating: {{ movie.vote_average }}</p>
+  </mat-card-content>
+</mat-card>
