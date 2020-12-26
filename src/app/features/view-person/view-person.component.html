@@ -13,6 +13,23 @@
   </ng-container>
 </ng-container>
 
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between" fxLayoutAlign="center" fxLayoutGap="20px">
+  <div fxFlex="25%" fxFlex.xs="100%">
+    <app-movie-highlighted
+      *ngIf="lowestRatedMovie"
+      [movie]="lowestRatedMovie"
+      title="Lowest Rated Movie"
+    ></app-movie-highlighted>
+  </div>
+  <div fxFlex="25%" fxFlex.xs="100%">
+    <app-movie-highlighted
+      *ngIf="highestRatedMovie"
+      [movie]="highestRatedMovie"
+      title="Highest Rated Movie"
+    ></app-movie-highlighted>
+  </div>
+</div>
+
 <table mat-table [dataSource]="tableDataSource" matSort class="mat-elevation-z8">
   <!-- Title Column -->
   <ng-container matColumnDef="title">
@@ -35,7 +52,7 @@
   <!-- Comparison Column -->
   <ng-container matColumnDef="comparison">
     <th mat-header-cell mat-sort-header *matHeaderCellDef>Comparison</th>
-    <td mat-cell *matCellDef="let element">
+    <td mat-cell *matCellDef="let element" [ngClass]="getComparisonClass(element.comparison)">
       <ng-container *ngIf="element.comparison">
         <ng-container [ngSwitch]="element.comparison.direction">
           <ng-container *ngSwitchCase="ComparisonDirectionEnum.UP">
@@ -47,7 +64,7 @@
         </ng-container>
       </ng-container>
       <ng-container *ngIf="element.comparison; else noComparison">{{ element.comparison.amount }}</ng-container>
-      <ng-template #noComparison>N/A</ng-template>
+      <ng-template #noComparison></ng-template>
     </td>
   </ng-container>
 
