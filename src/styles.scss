@@ -29,6 +29,10 @@ $hollywood-timeline-theme: mat-light-theme((color: (primary: $hollywood-timeline
 // that you are using.
 @include angular-material-theme($hollywood-timeline-theme);
 
+$hollywood-timeline-typography: mat-typography-config($font-family: 'Josefin Sans');
+$hollywood-timeline-header-typography: mat-typography-config($font-family: 'Limelight');
+@include mat-core($hollywood-timeline-typography);
+
 /* You can add global styles to this file, and also import other style files */
 
 html,
@@ -38,7 +42,11 @@ body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+.mat-h1,
+.mat-headline,
+.mat-typography h1 {
+  font-family: 'Limelight', cursive !important;
+}
 // #2D2A32 #DDD92A #EAE151 #EEEFA8 #FAFDF6

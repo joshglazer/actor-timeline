@@ -1,16 +1,22 @@
-<h2>Welcome to the Hollywood Timeline</h2>
-<div>
-  How good or bad is your favorite Hollywood celebrity's career? Type their name into the search box below to find out.
-</div>
+<div class="search-form">
+  <div>How good or bad is your favorite Hollywood celebrity's career?</div>
+  <div>Type their name into the search box below to find out.</div>
 
-<form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-  <mat-form-field>
-    <mat-label>Name:</mat-label>
-    <input matInput type="text" formControlName="name" required />
-    <mat-error *ngIf="false">Name is required</mat-error>
-  </mat-form-field>
-  <button mat-button color="primary">Search</button>
-</form>
+  <form
+    [formGroup]="searchForm"
+    (ngSubmit)="onSearch()"
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="center center"
+  >
+    <mat-form-field>
+      <mat-label>Celebrity's Name (eg: Rick Moranis):</mat-label>
+      <input matInput type="text" formControlName="name" required />
+      <mat-error *ngIf="false">Name is required</mat-error>
+    </mat-form-field>
+    <button mat-flat-button color="primary">Search</button>
+  </form>
+</div>
 
 <ng-container *ngIf="searchResults !== undefined && searchResults.results">
   <ng-container *ngIf="searchResults.total_results !== 0; else noResults">
@@ -41,7 +47,5 @@
       </ng-container>
     </div>
   </ng-container>
-  <ng-template #noResults>
-    No actors were found. Try searching for somebody else.
-  </ng-template>
+  <ng-template #noResults> No actors were found. Try searching for somebody else. </ng-template>
 </ng-container>
