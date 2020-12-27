@@ -1,12 +1,30 @@
 header,
 footer {
-    background-color: #DDD92A;
+    background-color: #e09f3e;
+}
+
+main {
+    background-color: #fff3b0;
+}
+
+a,
+a:visited {
+    color: #335c67;
+    font-weight: bold;
 }
 
 h1 {
     margin: 0;
+    font-size: 3em;
+    line-height: normal;
+    text-align: center;
+    padding: 0.25em 0;
+
+    @media only screen and (max-width: 600px) {
+        font-size: 2em;
+    }
 }
 
 .content-padding {
-    padding: 10px 20px;
+    padding: 20px 40px;
 }
