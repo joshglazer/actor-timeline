@@ -35,6 +35,8 @@ export class ViewPersonComponent implements OnInit {
   public primaryXAxis: AxisModel;
   public primaryYAxis: AxisModel;
 
+  public TMDB_IMAGE_BASE_PATH = TMDB_IMAGE_BASE_PATH;
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   displayedColumns: string[] = ['title', 'releaseDate', 'rating', 'comparison'];
@@ -76,54 +78,59 @@ export class ViewPersonComponent implements OnInit {
   loadMovieCredits(): void {
     this.tmdbApiService.searchForMoviesByPersonID(this.personID).subscribe((movies: TmdbMovieCredits) => {
       this.movies = movies.cast.sort((a, b) => (a.release_date > b.release_date ? 1 : -1));
+
+      // Remove movies with incomplete data
+      this.movies = this.movies.filter((movie) => movie.release_date && movie.vote_count > 0);
+
+      // Remove movies where the actor is playing themselves or no character is specified
+      const charactersToRemove = ['himself', ''];
+      this.movies = this.movies.filter((movie) => !charactersToRemove.includes(movie.character?.toLowerCase() ?? ''));
       const dataSource: DataTableRow[] = [];
 
       let lastRating = null;
 
-      for (const movie of movies.cast) {
-        if (movie.release_date !== '' && movie.release_date !== undefined && movie.vote_count > 0) {
-          // Format Date
-          const releaseDate = movie.release_date.split('-');
-          const releaseDateParsed = new Date(
-            parseInt(releaseDate[0], 10),
-            parseInt(releaseDate[1], 10),
-            parseInt(releaseDate[2], 10)
-          );
+      for (const movie of this.movies) {
+        // Format Date
+        const releaseDate = movie.release_date.split('-');
+        const releaseDateParsed = new Date(
+          parseInt(releaseDate[0], 10),
+          parseInt(releaseDate[1], 10),
+          parseInt(releaseDate[2], 10)
+        );
 
-          // Add Data to Chart
-          this.moviesChartDataRaw.push({
-            x: releaseDateParsed,
-            y: movie.vote_average,
-          });
+        // Add Data to Chart
+        this.moviesChartDataRaw.push({
+          x: releaseDateParsed,
+          y: movie.vote_average,
+        });
 
-          // Calculate Comparison
-          let comparison: Comparison | null = null;
-          if (lastRating) {
-            const amount = lastRating - movie.vote_average;
-            comparison = {
-              amount: Math.round(Math.abs(amount) * 10) / 10,
-              direction: amount > 0 ? ComparisonDirectionEnum.DOWN : ComparisonDirectionEnum.UP,
-            };
-          }
-          lastRating = movie.vote_average;
-
-          // Determine movie statistics
-          if (!this.lowestRatedMovie || this.lowestRatedMovie.vote_average > movie.vote_average) {
-            this.lowestRatedMovie = movie;
-          }
-
-          if (!this.highestRatedMovie || this.highestRatedMovie.vote_average < movie.vote_average) {
-            this.highestRatedMovie = movie;
-          }
-
-          // Add data to table
-          dataSource.push({
-            title: movie.original_title,
-            releaseDate: releaseDateParsed,
-            rating: movie.vote_average,
-            comparison,
-          });
+        // Calculate Comparison
+        let comparison: Comparison | null = null;
+        if (lastRating) {
+          const amount = lastRating - movie.vote_average;
+          comparison = {
+            amount: Math.round(Math.abs(amount) * 10) / 10,
+            direction: amount > 0 ? ComparisonDirectionEnum.DOWN : ComparisonDirectionEnum.UP,
+          };
         }
+        lastRating = movie.vote_average;
+
+        // Determine movie statistics
+        if (!this.lowestRatedMovie || this.lowestRatedMovie.vote_average > movie.vote_average) {
+          this.lowestRatedMovie = movie;
+        }
+
+        if (!this.highestRatedMovie || this.highestRatedMovie.vote_average < movie.vote_average) {
+          this.highestRatedMovie = movie;
+        }
+
+        // Add data to table
+        dataSource.push({
+          title: movie.original_title,
+          releaseDate: releaseDateParsed,
+          rating: movie.vote_average,
+          comparison,
+        });
       }
 
       this.tableDataSource = new MatTableDataSource(dataSource);
