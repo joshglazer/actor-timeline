@@ -29,7 +29,7 @@
     "@syncfusion/ej2-angular-charts": "^18.4.34",
     "@syncfusion/ej2-angular-grids": "^18.4.34",
     "ngx-broken-img": "^1.0.2",
-    "rxjs": "~6.6.3",
+    "rxjs": "~6.6.7",
     "tslib": "^2.1.0",
     "zone.js": "^0.10.3"
   },
