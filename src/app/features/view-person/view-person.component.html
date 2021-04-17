@@ -1,19 +1,23 @@
 <ng-container *ngIf="person">
   <h2>{{ person.name }}</h2>
-  <p>Let's see how {{ person.name }}'s career is going...</p>
 </ng-container>
 
-<ng-container *ngIf="movies">
-  <ng-container *ngIf="moviesChartDataRaw">
-    <ejs-chart id="chart-container" [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [title]="title">
-      <e-series-collection>
-        <e-series [dataSource]="moviesChartDataRaw" type="Line" xName="x" yName="y" name="Sales"></e-series>
-      </e-series-collection>
-    </ejs-chart>
-  </ng-container>
-</ng-container>
-
-<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between" fxLayoutAlign="center" fxLayoutGap="20px">
+<div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-between" fxLayoutGap="0px">
+  <div fxFlex="25%" fxFlex.xs="100%">
+    <ng-container *ngIf="person">
+      <mat-card class="searchResultsPerson">
+        <mat-card-header>
+          <mat-card-title>{{ person.name }}</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          [src]="person.profile_path ? TMDB_IMAGE_BASE_PATH + person.profile_path : './assets/no_picture_found.jpg'"
+          [alt]="'Photo of ' + person.name"
+          ngxBrokenImg="./assets/no_picture_found.jpg"
+        />
+      </mat-card>
+    </ng-container>
+  </div>
   <div fxFlex="25%" fxFlex.xs="100%">
     <app-movie-highlighted
       *ngIf="lowestRatedMovie"
@@ -29,6 +33,17 @@
     ></app-movie-highlighted>
   </div>
 </div>
+
+<ng-container *ngIf="movies">
+  <ng-container *ngIf="moviesChartDataRaw">
+    <p>Let's see how {{ person.name }}'s career is going...</p>
+    <ejs-chart id="chart-container" [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [title]="title">
+      <e-series-collection>
+        <e-series [dataSource]="moviesChartDataRaw" type="Line" xName="x" yName="y" name="Sales"></e-series>
+      </e-series-collection>
+    </ejs-chart>
+  </ng-container>
+</ng-container>
 
 <table mat-table [dataSource]="tableDataSource" matSort class="mat-elevation-z8">
   <!-- Title Column -->
